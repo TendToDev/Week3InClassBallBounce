@@ -8,12 +8,9 @@ public class BallController : MonoBehaviour
     //Components Connected to the same gameObject as this one.
     AudioSource myAudio;
     Rigidbody myBod;
-
     
     //public properties
     public AudioClip bounceSound; //Initialised in the inspector.
-
-    
 
     // Start is called before the first frame update
     void Start()
