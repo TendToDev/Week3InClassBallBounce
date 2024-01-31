@@ -19,7 +19,8 @@ public class BallController : MonoBehaviour
         myAudio = GetComponent<AudioSource>();
         myBod = GetComponent<Rigidbody>();
 
-        myBod.velocity = new Vector3(1, 5, 0);
+        float x = Random.Range(-3f, 3f);
+        myBod.velocity = new Vector3(x, 5, 0);
 
     }
 
@@ -33,4 +34,11 @@ public class BallController : MonoBehaviour
     {
         myAudio.PlayOneShot(bounceSound);
     }
+
+    //Called when my gameObject collides with another
+    //Requires at least 1 of the gameObjects to have a Rigidbody.
+    private void OnTriggerEnter(Collider other) {
+        GameObject g = Instantiate(gameObject);
+        g.transform.position = new Vector3(0, 5, 0);
+    }    
 }

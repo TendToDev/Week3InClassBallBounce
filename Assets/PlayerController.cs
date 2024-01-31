@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
 
         //init private properties
         score = 0;
+
+        
     }
 
     // Update is called once per frame
@@ -36,6 +38,17 @@ public class PlayerController : MonoBehaviour
         float v = Input.GetAxis("Vertical");
 
         transform.position += h * Vector3.right * Time.deltaTime * speed;
+
+        if(Input.GetButtonDown("Jump")) {
+            // make it a toggle using if/else
+            // hint check if timeScale is zero
+            if(Time.timeScale == 0) {
+                Time.timeScale = 1;    
+            }
+            else {
+                Time.timeScale = 0;
+            }
+        }
         
     }
 
@@ -46,5 +59,7 @@ public class PlayerController : MonoBehaviour
     {
         score += 10;
         scoreTxt.text = "Score: " + score;
+        
+        // hide score with scoreTxt.text = "";
     }    
 }
