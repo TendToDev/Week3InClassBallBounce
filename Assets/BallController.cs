@@ -5,40 +5,57 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-    //Components Connected to the same gameObject as this one.
+    // Audio source component for playing sounds.
     AudioSource myAudio;
-    Rigidbody myBod;
     
-    //public properties
-    public AudioClip bounceSound; //Initialised in the inspector.
+    // Rigidbody component for physics operations.
+    Rigidbody myBod;
 
-    // Start is called before the first frame update
+    FloorController floorCon;
+    
+    // Sound clip to play when the ball bounces. Set this in Unity's inspector.
+    public AudioClip bounceSound;
+
+    // Start is called before the first frame update.
     void Start()
     {
-        //init my components
+        // Initialize the AudioSource and Rigidbody components attached to this GameObject.
         myAudio = GetComponent<AudioSource>();
         myBod = GetComponent<Rigidbody>();
+        floorCon = GameObject.Find("Floor").GetComponent<FloorController>();
 
-        float x = Random.Range(-3f, 3f);
-        myBod.velocity = new Vector3(x, 5, 0);
-
+        // Generate a random horizontal velocity for the ball at the start.
+        float x = Random.Range(-3f, 3f); // Randomly choose a value between -3 and 3.
+        // Set the ball's initial velocity.
+        myBod.velocity = new Vector3(x, 5, 0); // 5 units upwards and a random x velocity.
     }
 
-    // Update is called once per frame
+    // Update is called once per frame.
     void Update()
     {
-        
+        // This method is called every frame. You can check for user input or other conditions here.
     }
 
+    // This method is called when the GameObject collides with another GameObject.
     private void OnCollisionEnter(Collision collision)
     {
+        // Play the bounce sound whenever a collision is detected.
         myAudio.PlayOneShot(bounceSound);
     }
 
-    //Called when my gameObject collides with another
-    //Requires at least 1 of the gameObjects to have a Rigidbody.
-    private void OnTriggerEnter(Collider other) {
-        GameObject g = Instantiate(gameObject);
-        g.transform.position = new Vector3(0, 5, 0);
+    // This method is triggered when the GameObject enters a Trigger Collider.
+    private void OnTriggerEnter(Collider other)
+    {
+        // Check if the GameObject colliding is named "BonusBox".
+        if(other.name == "BonusBox")
+        {
+            // Instantiate a new copy of this GameObject.
+            GameObject g = Instantiate(gameObject);
+            // Set the new GameObject's position.
+            g.transform.position = new Vector3(0, 13, 0); // Place it at position (0, 5, 0).
+
+            floorCon.ballCounter++;
+
+        }
     }    
 }
